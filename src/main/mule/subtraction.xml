@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="subtractionFlow" doc:id="b6ef94f3-af11-4e2f-b8d3-45c4ef08e0b8" >
+		<http:listener doc:name="Listener" doc:id="75a574d1-13c5-4804-ae89-74de6e5c3b90" config-ref="HTTP_Listener_config" path="/Div"/>
+		<logger level="INFO" doc:name="flow start" doc:id="4960efe2-ee13-48ed-a393-14673550fa33" message="flow start sub"/>
+		<set-variable value="#[attributes.queryParams.operation]" doc:name="Set operation var" doc:id="ece80a19-26cd-4fd9-8a57-09aacc8fd907" variableName="operation"/>
+		<set-variable value="#[attributes.queryParams.num1]" doc:name="Set num1  Var" doc:id="03f3935b-c1e1-4138-90ca-668180d19adc" variableName="num1"/>
+		<set-variable value="#[attributes.queryParams.num2]" doc:name="Set  num2 Var" doc:id="30f8b9a5-88a8-489d-af0b-21dc50ad0ffe" variableName="num2"/>
+		<set-payload value='#[vars.operation as String ++ " " ++ vars.num1/vars.num2]' doc:name="Set Payload" doc:id="e920bd72-741c-4d89-a999-5a123634fd87" />
+		<logger level="INFO" doc:name="payload msg" doc:id="c881d503-2874-4a5a-bd5e-94575662fe5b" message="#[payload]"/>
+		<logger level="INFO" doc:name="flow end" doc:id="82b384ca-5d11-449d-9393-8e83e22778fc" message="byebye"/>
+	</flow>
+</mule>
