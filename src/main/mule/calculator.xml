@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9588909d-72e8-468c-aa77-5294520c1dd0" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="calculatorFlow" doc:id="623ba3db-f610-446f-bf0d-9ca15b5a6a39" >
+		<http:listener doc:name="get-add" doc:id="36bd9ec6-4bfb-4d2e-b844-49866e010f7b" config-ref="HTTP_Listener_config" path="/Add"/>
+		<logger level="INFO" doc:name="start" doc:id="94a82505-92c0-4136-8635-3615fd4fee40" message="flow start"/>
+		<set-variable value="#[attributes.queryParams.operation]" doc:name="Set operation Var" doc:id="dc4cc3fc-1cc5-4a13-9616-6865ba8bcf04" variableName="operation"/>
+		<set-variable value="#[attributes.queryParams.num1]" doc:name="Set num1 var" doc:id="672af6a1-a38b-4feb-af37-42435b84475d" variableName="num1"/>
+		<set-variable value="#[attributes.queryParams.num2]" doc:name="Set num2 var" doc:id="a872ce83-0fda-4037-9eb7-da0ef555cdbe" variableName="num2"/>
+		<set-payload doc:name="Set Payload" doc:id="87c3d3ac-9de2-47b9-9944-593b74b59e7f" value='#[vars.operation as String ++ " " ++ vars.num1+vars.num2]'/>
+		<logger level="INFO" doc:name="end" doc:id="7c01c08b-b1cd-4d89-ba1c-e6f1b6db9996" message="#[payload]"/>
+	</flow>
+</mule>
